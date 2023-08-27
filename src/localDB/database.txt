@@ -1,0 +1,2 @@
+{"id":"sium","latitude":43.45,"longitude":5.3,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"mius","latitude":34.6,"longitude":4.5,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
