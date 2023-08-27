@@ -1,5 +1,7 @@
 package views.menu;
 
+import services.DataStorage;
+import services.IDataStorage;
 import views.menu.binManagement.DeleteBinProcess;
 import views.menu.binManagement.InstallBinProcess;
 import views.menu.binManagement.UnloadBinProcess;
@@ -9,9 +11,11 @@ import java.util.Scanner;
 
 public class ThrowTrashMenu {
     private final Scanner scanner;
+    private final IDataStorage dataStorage;
 
     public ThrowTrashMenu(){
         scanner = new Scanner(System.in);
+        dataStorage = new DataStorage();
     }
 
 
@@ -31,10 +35,10 @@ public class ThrowTrashMenu {
                     ThrowProcess throwProcess = new ThrowProcess();
                     throwProcess.startRandomThrow();
                 }
-                default -> {
-                    System.out.println("Invalid choice.");
-                }
+                default -> System.out.println("Invalid choice.");
             }
+
+            dataStorage.saveData();
         }
     }
 

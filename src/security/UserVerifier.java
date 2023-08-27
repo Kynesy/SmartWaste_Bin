@@ -3,19 +3,15 @@ package security;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class UserVerifier {
-    private final String encodedID;
     private final String decodedID;
     private static final String SYMMETRIC_SECRET_KEY = "mcMREavkBsiA3gYHxHSlOsvAVdNxjM6O";
     private static final String SECRET_KEYWORD = "TANGO";
 
     public UserVerifier(String encodedID){
-        this.encodedID = encodedID;
         this.decodedID = decryptMessage(encodedID);
-        System.out.println(decodedID);
     }
 
     public boolean isEncodedIdValid() {

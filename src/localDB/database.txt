@@ -1,2 +1,7 @@
-{"id":"sium","latitude":43.45,"longitude":5.3,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
-{"id":"mius","latitude":34.6,"longitude":4.5,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"64eb7f2426f4405f2767d0b1","latitude":40.356552,"longitude":18.174648,"capacity":100,"sortedWaste":3,"unsortedWaste":6,"alertLevel":0}
+{"id":"64eb7f9d26f4405f2767d0b2","latitude":40.35462,"longitude":18.17628,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"64eb7fcb26f4405f2767d0b3","latitude":40.354134,"longitude":18.171946,"capacity":100,"sortedWaste":22,"unsortedWaste":28,"alertLevel":0}
+{"id":"64eb800026f4405f2767d0b4","latitude":40.35132,"longitude":18.176666,"capacity":100,"sortedWaste":5,"unsortedWaste":15,"alertLevel":0}
+{"id":"64eb803b26f4405f2767d0b5","latitude":40.355896,"longitude":18.181473,"capacity":100,"sortedWaste":12,"unsortedWaste":18,"alertLevel":0}
+{"id":"64eb806c26f4405f2767d0b6","latitude":40.35315,"longitude":18.179585,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"64eb809426f4405f2767d0b7","latitude":40.351746,"longitude":18.169456,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}

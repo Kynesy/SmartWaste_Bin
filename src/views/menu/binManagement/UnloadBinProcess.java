@@ -33,13 +33,11 @@ public class UnloadBinProcess {
                 System.out.println("Bin ("+binID+") unloaded successfully");
                 AlertNotification alertNotification = new AlertNotification();
 
-                alertNotification.setId("");
                 alertNotification.setBinId(binID);
                 alertNotification.setAlertLevel(0);
                 alertNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
 
-                //publisherService.sendAlert(alertNotification);
-                System.out.println(alertNotification);
+                publisherService.sendAlert(alertNotification);
             }else{
                 System.out.println("Error: Bin not found.");
             }

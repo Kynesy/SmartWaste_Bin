@@ -8,7 +8,7 @@ import views.menu.ThrowTrashMenu;
 import java.util.Scanner;
 
 public class MyTerminalApp {
-    private Scanner input;
+    private final Scanner input;
     private final IDataStorage dataStorage;
     public MyTerminalApp() {
         input = new Scanner(System.in);
@@ -20,25 +20,22 @@ public class MyTerminalApp {
         boolean exit = false;
         while(!exit){
             int choice = showMainMenu();
-            switch (choice){
-                case 0:{
+
+            switch (choice) {
+                case 0 -> {
                     exit = true;
                     dataStorage.saveData();
-                    break;
                 }
-                case 1:{
+                case 1 -> {
                     BinManagementMenu binManagementMenu = new BinManagementMenu();
                     binManagementMenu.start();
-                    break;
                 }
-                case 2:{
+                case 2 -> {
                     ThrowTrashMenu throwTrashMenu = new ThrowTrashMenu();
                     throwTrashMenu.start();
-                    break;
                 }
-                default:{
+                default -> {
                     System.out.println("Invalid choice.");
-                    break;
                 }
             }
         }

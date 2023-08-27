@@ -40,10 +40,9 @@ public class BinManagementMenu {
                 case 4 -> {
                     showAllBins();
                 }
-                default -> {
-                    System.out.println("Invalid choice.");
-                }
+                default -> System.out.println("Invalid choice.");
             }
+            dataStorage.saveData();
         }
     }
 
@@ -56,7 +55,7 @@ public class BinManagementMenu {
             System.out.println("Use numbers to select.");
             System.out.println("1. Install a Bin (Only for managing local DB)");
             System.out.println("2. Remove a Bin (Only for managing local DB)");
-            System.out.println("3. Unload a Bin (RabbitMQ)");
+            System.out.println("3. Unload Bins (RabbitMQ)");
             System.out.println("4. Show all bins in local DB.");
 
             System.out.println("0. Back");
@@ -69,6 +68,7 @@ public class BinManagementMenu {
                 System.out.println("Invalid input: Please enter a valid integer.");
                 scanner.nextLine();
             }
+
         }while(!done);
 
         return selection;
