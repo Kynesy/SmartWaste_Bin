@@ -1,6 +1,9 @@
 package services;
 
+import models.AlertNotification;
+import models.TrashNotification;
+
 public interface IPublisherService {
-    void sendTrash(String messageToSend);
-    void sendAlert(String messageToSend);
+    void sendTrash(TrashNotification trashNotification);
+    void sendAlert(AlertNotification alertNotification);
 }
