@@ -7,7 +7,7 @@ public class RabbitConfig {
     private static final String ALERT_ROUTING_KEY = "capacityAlertRK";
     private static final String ALERT_QUEUE = "capacityAlertTopic";
 
-    private static final String HOST = "localhost"; // Replace with your desired routing key
+    private static final String HOST = "localhost";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
 
