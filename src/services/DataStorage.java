@@ -97,8 +97,8 @@ public class DataStorage implements IDataStorage{
         for(BinModel bin: localBins){
             if(bin.getId().equals(binID)){
                 if(canThrow(bin, sortedWaste, unsortedWaste)){
-                    bin.setUnsortedWaste(unsortedWaste);
-                    bin.setSortedWaste(sortedWaste);
+                    bin.setUnsortedWaste(bin.getUnsortedWaste() + unsortedWaste);
+                    bin.setSortedWaste(bin.getSortedWaste() + sortedWaste);
 
                     return updateAlert(bin);
 
@@ -130,7 +130,7 @@ public class DataStorage implements IDataStorage{
     }
 
     private int updateAlert(BinModel bin){
-        float percentage = (float) (100 * bin.getUnsortedWaste() + bin.getSortedWaste()) / bin.getCapacity();
+        float percentage = (float) (100 * (bin.getUnsortedWaste() + bin.getSortedWaste()) / bin.getCapacity());
 
         if(percentage <= 50){
             bin.setAlertLevel(0);

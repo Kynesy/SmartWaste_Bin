@@ -1,5 +1,6 @@
 package views.menu.throwTrash;
 
+import models.AlertNotification;
 import models.TrashNotification;
 import security.UserVerifier;
 import services.DataStorage;
@@ -52,8 +53,11 @@ public class ThrowProcess {
 
         trashNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
 
-        //publisherService.sendTrash(trashNotification);
-        System.out.println(trashNotification.getTimestamp());
+        int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
+
+        if(verifyAlert(result, binID) == 0){
+            publisherService.sendTrash(trashNotification);
+        }
     }
 
     public void startRandomThrow(){
@@ -72,8 +76,8 @@ public class ThrowProcess {
         Random random = new Random();
         int randomIndex = random.nextInt(dataStorage.getLocalBins().size());
         String binID = dataStorage.getLocalBins().get(randomIndex).getId();
-        int sortedTrash = random.nextInt(3) + 1;
-        int unsortedTrash = random.nextInt(3) + 1;
+        int sortedTrash = random.nextInt(10) + 1;
+        int unsortedTrash = random.nextInt(10) + 1;
 
         trashNotification.setBinId(binID);
         trashNotification.setUserId(userID);
@@ -81,8 +85,13 @@ public class ThrowProcess {
         trashNotification.setUnsortedWaste(unsortedTrash);
         trashNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
 
-        //publisherService.sendTrash(trashNotification);
-        System.out.println(trashNotification);
+        int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
+
+        if(verifyAlert(result, binID) == 0){
+            publisherService.sendTrash(trashNotification);
+        }
+
+        //System.out.println(trashNotification);
     }
 
     private String identifyUser(){
@@ -96,5 +105,19 @@ public class ThrowProcess {
         }else{
             return null;
         }
+    }
+
+    private int verifyAlert(int value, String binID){
+        if(value == -1){
+            System.out.println("Process aborted. Bin is full");
+            return 1;
+        }else if(value != 0){
+            AlertNotification alertNotification = new AlertNotification();
+            alertNotification.setBinId(binID);
+            alertNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
+            alertNotification.setAlertLevel(value);
+            publisherService.sendAlert(alertNotification);
+        }
+        return 0;
     }
 }
