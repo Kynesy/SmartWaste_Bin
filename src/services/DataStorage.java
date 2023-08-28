@@ -97,8 +97,7 @@ public class DataStorage implements IDataStorage{
         for(BinModel bin: localBins){
             if(bin.getId().equals(binID)){
                 if(canThrow(bin, sortedWaste, unsortedWaste)){
-                    bin.setUnsortedWaste(bin.getUnsortedWaste() + unsortedWaste);
-                    bin.setSortedWaste(bin.getSortedWaste() + sortedWaste);
+                    updateBinValue(bin, sortedWaste, unsortedWaste);
 
                     return updateAlert(bin);
 
@@ -108,6 +107,11 @@ public class DataStorage implements IDataStorage{
             }
         }
         return 0;
+    }
+
+    private void updateBinValue(BinModel bin, int sortedWaste, int unsortedWaste) {
+        bin.setUnsortedWaste(bin.getUnsortedWaste() + unsortedWaste);
+        bin.setSortedWaste(bin.getSortedWaste() + sortedWaste);
     }
 
     @Override
@@ -130,17 +134,23 @@ public class DataStorage implements IDataStorage{
     }
 
     private int updateAlert(BinModel bin){
-        float percentage = (float) (100 * (bin.getUnsortedWaste() + bin.getSortedWaste()) / bin.getCapacity());
 
+        float percentage = getPercentage(bin);
+
+        int value;
         if(percentage <= 50){
-            bin.setAlertLevel(0);
-            return 0;
+            value = 0;
         } else if (percentage <= 75) {
-            bin.setAlertLevel(1);
-            return 1;
+            value = 1;
         }else {
-            bin.setAlertLevel(2);
-            return 2;
+            value = 2;
         }
+
+        bin.setAlertLevel(value);
+        return value;
+    }
+
+    private float getPercentage(BinModel bin){
+        return (float) (100 * (bin.getUnsortedWaste() + bin.getSortedWaste()) / bin.getCapacity());
     }
 }
