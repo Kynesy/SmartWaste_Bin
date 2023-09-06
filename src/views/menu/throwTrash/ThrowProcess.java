@@ -12,65 +12,86 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Questa classe gestisce il processo di simulazione del lancio dei rifiuti.
+ * Gli utenti possono effettuare un lancio manuale dei rifiuti o un lancio casuale.
+ * Inoltre, viene effettuata la verifica dell'utente, la gestione del rifiuto e l'invio di notifiche
+ * in caso di allarme di capacità superata.
+ */
 public class ThrowProcess {
     private final Scanner scanner;
     private final IPublisherService publisherService;
     private final IDataStorage dataStorage;
 
-
+    /**
+     * Costruttore della classe ThrowProcess.
+     * Inizializza l'input da console, il servizio di pubblicazione (publisherService)
+     * e l'istanza di DataStorage per la gestione dei dati dei bidoni.
+     */
     public ThrowProcess() {
         scanner = new Scanner(System.in);
         publisherService = new PublisherService();
         dataStorage = new DataStorage();
     }
 
-    public void startThrow(){
+    /**
+     * Avvia il processo di lancio manuale dei rifiuti.
+     * Gli utenti possono inserire informazioni sul rifiuto come BinID, UserID, quantità di rifiuti
+     * e orario di lancio. Inoltre, viene effettuata una verifica dell'utente e la gestione delle notifiche.
+     */
+    public void startThrow() {
         System.out.println("------- Throw Trash Menu -------");
 
         TrashNotification trashNotification = new TrashNotification();
 
         String userID = identifyUser();
-        if(userID==null){
-            System.out.println("This UserID is not one provided by the Smart Management System.");
+        if (userID == null) {
+            System.out.println("Questo UserID non è fornito dal sistema di gestione intelligente.");
             return;
         }
         trashNotification.setUserId(userID);
 
-        System.out.println("Insert BinID...");
+        System.out.println("Inserisci il BinID...");
         String binID = scanner.next();
-        if(dataStorage.binExist(binID)){
+        if (dataStorage.binExist(binID)) {
             trashNotification.setBinId(binID);
-        }else{
-            System.out.println("This BinID does not exist.");
+        } else {
+            System.out.println("Questo BinID non esiste.");
             return;
         }
 
-        System.out.println("Insert amount of sorted waste (int)...");
+        System.out.println("Inserisci la quantità di rifiuti separati (int)...");
         trashNotification.setSortedWaste(scanner.nextInt());
 
-        System.out.println("Insert amount of unsorted waste (int)...");
+        System.out.println("Inserisci la quantità di rifiuti non separati (int)...");
         trashNotification.setUnsortedWaste(scanner.nextInt());
 
         trashNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
 
         int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
 
-        if(verifyAlert(result, binID) == 0){
+        if (verifyAlert(result, binID) == 0) {
             publisherService.sendTrash(trashNotification);
         }
     }
 
-    public void startRandomThrow(){
+    /**
+     * Avvia il processo di lancio casuale dei rifiuti.
+     * Viene generato casualmente un bin da cui verranno lanciati i rifiuti,
+     * insieme a un UserID valido e quantità di rifiuti casuali. Vengono effettuate verifiche
+     * sull'utente e sulle notifiche.
+     */
+    public void startRandomThrow() {
         System.out.println("------- Random Throw Trash Menu -------");
 
         TrashNotification trashNotification = new TrashNotification();
 
         String userID = identifyUser();
-        if(userID == null){
-            System.out.println("This UserID is not one provided by the Smart Management System.");
+        if (userID == null) {
+            System.out.println("Questo UserID non è fornito dal sistema di gestione intelligente.");
             return;
-        }else{
-            System.out.println("The provided UserID is valid.");
+        } else {
+            System.out.println("Il UserID fornito è valido.");
         }
 
         Random random = new Random();
@@ -87,31 +108,44 @@ public class ThrowProcess {
 
         int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
 
-        if(verifyAlert(result, binID) == 0){
+        if (verifyAlert(result, binID) == 0) {
             publisherService.sendTrash(trashNotification);
         }
-
-        //System.out.println(trashNotification);
     }
 
-    private String identifyUser(){
-        System.out.println("Insert UserID (string)...");
+    /**
+     * Effettua la verifica dell'utente in base all'ID fornito.
+     * Se l'ID è valido, restituisce l'ID reale dell'utente; altrimenti, restituisce null.
+     *
+     * @return L'ID reale dell'utente o null se l'ID non è valido.
+     */
+    private String identifyUser() {
+        System.out.println("Inserisci l'UserID (stringa)...");
         String encodedID = scanner.next();
 
         UserVerifier userVerifier = new UserVerifier(encodedID);
 
-        if(userVerifier.isEncodedIdValid()){
+        if (userVerifier.isEncodedIdValid()) {
             return userVerifier.getRealID();
-        }else{
+        } else {
             return null;
         }
     }
 
-    private int verifyAlert(int value, String binID){
-        if(value == -1){
-            System.out.println("Process aborted. Bin is full");
+    /**
+     * Verifica se è necessario inviare una notifica di allarme in base al risultato dell'upload dei rifiuti.
+     * Se il valore è -1, il processo è annullato poiché il bidone è pieno. Se il valore non è 0,
+     * viene creata e inviata una notifica di allarme.
+     *
+     * @param value Il valore restituito dal processo di upload dei rifiuti.
+     * @param binID L'ID del bidone associato all'upload.
+     * @return 0 se il processo è completato con successo, altrimenti 1.
+     */
+    private int verifyAlert(int value, String binID) {
+        if (value == -1) {
+            System.out.println("Processo annullato. Il bidone è pieno.");
             return 1;
-        }else if(value != 0){
+        } else if (value != 0) {
             AlertNotification alertNotification = new AlertNotification();
             alertNotification.setBinId(binID);
             alertNotification.setTimestamp(String.valueOf(LocalDateTime.now()));

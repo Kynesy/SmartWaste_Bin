@@ -1,24 +1,37 @@
+/**
+ * Questa classe rappresenta un modello di notifica di rifiuti.
+ * Contiene informazioni relative all'ID, al timestamp, all'ID dell'utente,
+ * all'ID del bidone, alla quantità di rifiuti differenziati e indifferenziati.
+ */
 package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TrashNotification {
+    // Proprietà del modello di notifica di rifiuti
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("timestamp")
     private String timestamp;
+
     @JsonProperty("userId")
     private String userId;
+
     @JsonProperty("binId")
     private String binId;
+
     @JsonProperty("sortedWaste")
     private int sortedWaste;
+
     @JsonProperty("unsortedWaste")
     private int unsortedWaste;
 
+    // Costruttore vuoto
     public TrashNotification() {
     }
 
+    // Metodi di accesso per le proprietà del modello
     public String getId() {
         return id;
     }
@@ -67,6 +80,7 @@ public class TrashNotification {
         this.unsortedWaste = unsortedWaste;
     }
 
+    // Metodo di override per rappresentazione testuale
     @Override
     public String toString() {
         return "TrashNotification{" +

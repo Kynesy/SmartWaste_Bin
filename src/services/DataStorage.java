@@ -2,10 +2,14 @@ package services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.BinModel;
-
 import java.io.*;
 import java.util.ArrayList;
 
+
+/**
+ * Questa classe gestisce l'archiviazione e il recupero dei dati dei bidoni di raccolta.
+ * I dati vengono salvati su un file di testo e caricati da tale file quando richiesto.
+ */
 public class DataStorage implements IDataStorage{
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final ArrayList<BinModel> localBins = new ArrayList<>();
@@ -14,6 +18,9 @@ public class DataStorage implements IDataStorage{
     public DataStorage(){
     }
 
+    /**
+     * Il metodo salva i dati dei bidoni sul file del database locale.
+     */
     @Override
     public void saveData() {
         System.out.println("StorageService | Saving data...");
@@ -28,6 +35,9 @@ public class DataStorage implements IDataStorage{
         }
     }
 
+    /**
+     * Il metodo carica i dati dei bidoni dal file del database locale.
+     */
     @Override
     public void loadData() {
         System.out.println("StorageService | Loading data...");
@@ -50,17 +60,37 @@ public class DataStorage implements IDataStorage{
         }
     }
 
+    /**
+     * Il metodo viene usato per ottenere la lista di tutti i bidoni del DB.
+     *
+     * @return Un oggetto ArrayList contentente i bidoni
+     */
     @Override
     public ArrayList<BinModel> getLocalBins() {
         return localBins;
     }
 
+    /**
+     * Il metodo viene usato per simulare l'installazione di un bidone.
+     * In pratica lo aggiunge al db locale.
+     *
+     * @param bin Oggetto bin (con ID, latitudine, longitudine e capacità istanziate secondo
+     *            le info fornite dal FrontEnd
+     * @return 0 in caso di successo
+     */
     @Override
     public int installBin(BinModel bin) {
         localBins.add(bin);
         return 0;
     }
 
+    /**
+     * Il metodo simula la rimozione di un cestino.
+     * In pratica lo elimina dal db locale.
+     *
+     * @param binID ID del cestino da rimuovere
+     * @return 0 se è stato rimosso, 1 altrimenti
+     */
     @Override
     public int removeBin(String binID) {
         boolean removed = localBins.removeIf(bin -> bin.getId().equals(binID));
@@ -72,6 +102,13 @@ public class DataStorage implements IDataStorage{
         return 1;
     }
 
+    /**
+     * Il metodo simula lo svuotamento del cestino.
+     * In pratica azzera il livello di spazzatura ed il livello di alert
+     *
+     * @param binID ID del cestino da svuotare
+     * @return 0 se è stato svuotato, 1 altrimenti
+     */
     @Override
     public int unloadBin(String binID) {
         boolean find = false;
@@ -92,6 +129,16 @@ public class DataStorage implements IDataStorage{
         return 1;
     }
 
+    /**
+     * Il metodo controlla se è possibile ancora buttare della spazzatura nel cestino,
+     * e se possibile, aggiunge della spazzatura al cestino indicato.
+     *
+     * @param binID ID del cestino da aggiornare
+     * @param sortedWaste KG di spazzatura differenziata da aggiungere
+     * @param unsortedWaste KG di spazzatura indifferenziata da aggiungere
+     *
+     * @return 0 se i dati sono stati aggiornati, 1 altrimenti
+     */
     @Override
     public int uploadBin(String binID, int sortedWaste, int unsortedWaste) {
         for(BinModel bin: localBins){
@@ -109,11 +156,24 @@ public class DataStorage implements IDataStorage{
         return 0;
     }
 
+    /**
+     * Il metodo aggiorna il nuovo livello di spazzatura nel cestino in base ai KG da buttare.
+     *
+     * @param bin Oggetto del cestino da aggiornare
+     * @param sortedWaste KG di spazzatura differenziata da aggiungere
+     * @param unsortedWaste KG di spazzatura indifferenziata da aggiungere
+     */
     private void updateBinValue(BinModel bin, int sortedWaste, int unsortedWaste) {
         bin.setUnsortedWaste(bin.getUnsortedWaste() + unsortedWaste);
         bin.setSortedWaste(bin.getSortedWaste() + sortedWaste);
     }
 
+    /**
+     * Il metodo controlla se l'ID indicato corrisponde ad un cestino esistente.
+     *
+     * @param binID ID del cestino
+     * @return True se esiste, False altrimenti
+     */
     @Override
     public boolean binExist(String binID) {
         boolean find = false;
@@ -126,6 +186,15 @@ public class DataStorage implements IDataStorage{
         return find;
     }
 
+    /**
+     * Il metodo esegue un calcolo per capire se il cestino ha abbastanza
+     * spazio per gettare la spazzatura
+     *
+     * @param bin Oggetto del cestino da aggiornare
+     * @param sorted KG di spazzatura differenziare che si intente gettare
+     * @param unsorted KG di spazzatura indifferenziata che si intende gettare
+     * @return True se il cestino ha abbastanza spazio, False altrimenti
+     */
     private boolean canThrow(BinModel bin, int sorted, int unsorted){
         int oldTrash = bin.getSortedWaste() + bin.getUnsortedWaste();
         int newTrash = sorted + unsorted;
@@ -133,6 +202,13 @@ public class DataStorage implements IDataStorage{
         return newTrash + oldTrash <= bin.getCapacity();
     }
 
+    /**
+     * Il metodo aggiorna il livello di alert sul cestino fornito in base alla quantità
+     * di spazzatura contenuta.
+     *
+     * @param bin Oggetto cestino da controllare
+     * @return Il livello di alert impostato al cestino
+     */
     private int updateAlert(BinModel bin){
 
         float percentage = getPercentage(bin);
@@ -150,6 +226,12 @@ public class DataStorage implements IDataStorage{
         return value;
     }
 
+    /**
+     * Metodo che calcola la percentuale di riempimento di un cestino.
+     *
+     * @param bin Oggetto cestino su cui effettuare il calcolo
+     * @return Ritorna il valore della percentuale di riempimento.
+     */
     private float getPercentage(BinModel bin){
         return (float) (100 * (bin.getUnsortedWaste() + bin.getSortedWaste()) / bin.getCapacity());
     }

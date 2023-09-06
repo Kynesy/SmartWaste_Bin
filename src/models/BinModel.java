@@ -2,27 +2,42 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Questa classe rappresenta un modello per un bidone di raccolta rifiuti.
+ * Contiene informazioni relative all'ID, alla posizione (latitudine e longitudine),
+ * alla capacità, alla quantità di rifiuti differenziati e indifferenziati,
+ * e al livello di allarme del bidone.
+ */
 public class BinModel {
+    // Proprietà del modello del bidone
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("latitude")
     private float latitude;
+
     @JsonProperty("longitude")
     private float longitude;
+
     @JsonProperty("capacity")
     private int capacity;
+
     @JsonProperty("sortedWaste")
     private int sortedWaste;
+
     @JsonProperty("unsortedWaste")
     private int unsortedWaste;
+
     @JsonProperty("alertLevel")
     private int alertLevel;
 
-    public String getId() {
-        return id;
+    // Costruttore vuoto
+    public BinModel() {
     }
 
-    public BinModel() {
+    // Metodi di accesso per le proprietà del modello del bidone
+    public String getId() {
+        return id;
     }
 
     public void setId(String id) {
@@ -77,7 +92,7 @@ public class BinModel {
         this.alertLevel = alertLevel;
     }
 
-
+    // Metodo di override per rappresentazione testuale
     @Override
     public String toString() {
         return "Bin: {" +

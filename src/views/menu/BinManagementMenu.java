@@ -9,17 +9,32 @@ import views.menu.binManagement.UnloadBinProcess;
 
 import java.util.Scanner;
 
+/**
+ * Questa classe gestisce il menu per la simulazione della gestione dei bidoni di raccolta.
+ * L'utente può scegliere tra diverse opzioni, tra cui l'installazione e la rimozione di bidoni
+ * dal database locale, lo scarico dei bidoni tramite RabbitMQ e la visualizzazione di tutti i bidoni presenti
+ * nel database locale.
+ */
 public class BinManagementMenu {
     private final Scanner scanner;
     private final IDataStorage dataStorage;
-    public BinManagementMenu(){
+
+    /**
+     * Costruttore della classe BinManagementMenu.
+     * Inizializza l'input da console e crea un'istanza di DataStorage per la gestione dei dati dei bidoni.
+     */
+    public BinManagementMenu() {
         scanner = new Scanner(System.in);
         dataStorage = new DataStorage();
     }
 
+    /**
+     * Avvia il menu per la simulazione della gestione dei bidoni di raccolta.
+     * L'utente può scegliere tra le varie opzioni e interagire con la simulazione.
+     */
     public void start() {
         boolean back = false;
-        while(!back){
+        while (!back) {
             int choice = showMenu();
             switch (choice) {
                 case 0 -> {
@@ -40,45 +55,53 @@ public class BinManagementMenu {
                 case 4 -> {
                     showAllBins();
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println("Scelta non valida.");
             }
             dataStorage.saveData();
         }
     }
 
+    /**
+     * Visualizza il menu della simulazione della gestione dei bidoni di raccolta
+     * e permette all'utente di effettuare una selezione.
+     *
+     * @return La scelta effettuata dall'utente.
+     */
     private int showMenu() {
         boolean done = false;
         int selection = 0;
 
-        do{
-            System.out.println("-------------- Bin Management Simulation Menu -------------");
-            System.out.println("Use numbers to select.");
-            System.out.println("1. Install a Bin (Only for managing local DB)");
-            System.out.println("2. Remove a Bin (Only for managing local DB)");
-            System.out.println("3. Unload Bins (RabbitMQ)");
-            System.out.println("4. Show all bins in local DB.");
+        do {
+            System.out.println("-------------- Menu Simulazione Gestione Bidoni -------------");
+            System.out.println("Utilizzare i numeri per selezionare un'opzione.");
+            System.out.println("1. Installa un bidone (Solo per la gestione del database locale)");
+            System.out.println("2. Rimuovi un bidone (Solo per la gestione del database locale)");
+            System.out.println("3. Scarica i bidoni (RabbitMQ)");
+            System.out.println("4. Mostra tutti i bidoni nel database locale.");
 
-            System.out.println("0. Back");
-            System.out.print("Waiting for selection... ");
+            System.out.println("0. Indietro");
+            System.out.print("In attesa di selezione... ");
 
-            if(scanner.hasNextInt()){
+            if (scanner.hasNextInt()) {
                 selection = scanner.nextInt();
                 done = true;
-            }else{
-                System.out.println("Invalid input: Please enter a valid integer.");
+            } else {
+                System.out.println("Input non valido: Inserire un intero valido.");
                 scanner.nextLine();
             }
 
-        }while(!done);
+        } while (!done);
 
         return selection;
     }
 
-    private void showAllBins(){
-        System.out.println("------- Bin List ---------- ");
-        for(BinModel bin: dataStorage.getLocalBins()){
+    /**
+     * Mostra tutti i bidoni presenti nel database locale.
+     */
+    private void showAllBins() {
+        System.out.println("------- Lista Bidoni ---------- ");
+        for (BinModel bin : dataStorage.getLocalBins()) {
             System.out.println(bin.toString());
         }
     }
-
 }
