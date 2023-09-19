@@ -1,8 +1,9 @@
-{"id":"64eb7f2426f4405f2767d0b1","latitude":40.356552,"longitude":18.174648,"capacity":100,"sortedWaste":6,"unsortedWaste":13,"alertLevel":0}
-{"id":"64eb7f9d26f4405f2767d0b2","latitude":40.35462,"longitude":18.17628,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
-{"id":"64eb7fcb26f4405f2767d0b3","latitude":40.354134,"longitude":18.171946,"capacity":100,"sortedWaste":14,"unsortedWaste":9,"alertLevel":0}
-{"id":"64eb800026f4405f2767d0b4","latitude":40.35132,"longitude":18.176666,"capacity":100,"sortedWaste":5,"unsortedWaste":2,"alertLevel":0}
-{"id":"64eb803b26f4405f2767d0b5","latitude":40.355896,"longitude":18.181473,"capacity":100,"sortedWaste":1,"unsortedWaste":1,"alertLevel":0}
+{"id":"64eb7f2426f4405f2767d0b1","latitude":40.356552,"longitude":18.174648,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"64eb7f9d26f4405f2767d0b2","latitude":40.35462,"longitude":18.17628,"capacity":100,"sortedWaste":30,"unsortedWaste":22,"alertLevel":1}
+{"id":"64eb7fcb26f4405f2767d0b3","latitude":40.354134,"longitude":18.171946,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"64eb800026f4405f2767d0b4","latitude":40.35132,"longitude":18.176666,"capacity":100,"sortedWaste":29,"unsortedWaste":21,"alertLevel":0}
+{"id":"64eb803b26f4405f2767d0b5","latitude":40.355896,"longitude":18.181473,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
 {"id":"64eb806c26f4405f2767d0b6","latitude":40.35315,"longitude":18.179585,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
-{"id":"64eb809426f4405f2767d0b7","latitude":40.351746,"longitude":18.169456,"capacity":100,"sortedWaste":26,"unsortedWaste":22,"alertLevel":0}
+{"id":"64eb809426f4405f2767d0b7","latitude":40.351746,"longitude":18.169456,"capacity":100,"sortedWaste":7,"unsortedWaste":10,"alertLevel":0}
 {"id":"64f0ea5fabcd7702b363256f","latitude":40.349552,"longitude":18.173061,"capacity":100,"sortedWaste":0,"unsortedWaste":0,"alertLevel":0}
+{"id":"65033499ff607b611808b22b","latitude":40.36636,"longitude":18.168797,"capacity":100,"sortedWaste":2,"unsortedWaste":1,"alertLevel":0}

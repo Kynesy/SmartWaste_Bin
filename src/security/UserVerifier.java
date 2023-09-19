@@ -27,6 +27,7 @@ public class UserVerifier {
      */
     public UserVerifier(String encodedID){
         this.decodedID = decryptMessage(encodedID);
+        System.out.println(decodedID);
     }
 
     /**
