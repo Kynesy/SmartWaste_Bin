@@ -14,7 +14,7 @@ public class RabbitConfig {
     private static final String ALERT_QUEUE = "capacityAlertTopic";
 
     // Indirizzo del server RabbitMQ
-    private static final String HOST = "localhost";
+    private static final String HOST = "54.166.4.107";
 
     // Credenziali di accesso
     private static final String USERNAME = "admin";

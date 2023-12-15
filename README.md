@@ -28,4 +28,12 @@ Il progetto è organizzato nelle seguenti directory principali:
 - `services`: Contiene i servizi per la gestione dei dati e la pubblicazione delle notifiche.
 - `views`: Contiene le interfacce utente e le viste del terminale.
 
-RoQFWhhnGo8Vd7hlx9rLvWT4rXv/HSMTyPfWQ7tHEAI=
+## Frontend
+
+cityHall: http://ec2-34-192-139-225.compute-1.amazonaws.com/home
+wasteAgency: http://ec2-3-227-223-40.compute-1.amazonaws.com/home
+
+## Users
+user: PDC8+Se5/Ytkb+D/B+WQBvOwJunct386R433OvRKbC0=
+user1: tSoHb05Cv6Thfg2iW/3NCPWsVSr7avxDL20+dEjr6hQ=
+user2: 3LyV/lO3nh6XaUH5811e+3lKsxwwA0pHFq7jdlp4JIc=
