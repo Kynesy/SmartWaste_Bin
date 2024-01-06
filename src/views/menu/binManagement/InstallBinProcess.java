@@ -40,16 +40,10 @@ public class InstallBinProcess {
     public void start() {
         System.out.println("-------- Fake Bin Installation Menu -------");
 
-        System.out.println("Inserisci l'ID del bidone (stringa)... ");
+        System.out.println("Inserisci i seguenti valori: id latitudine longitudine capacità ");
         bin.setId(scanner.next());
-
-        System.out.println("Inserisci la latitudine del bidone (float)... ");
         bin.setLatitude(scanner.nextFloat());
-
-        System.out.println("Inserisci la longitudine del bidone (float)... ");
         bin.setLongitude(scanner.nextFloat());
-
-        System.out.println("Inserisci la capacità del bidone (int)...");
         bin.setCapacity(scanner.nextInt());
 
         System.out.println(bin.toString());
