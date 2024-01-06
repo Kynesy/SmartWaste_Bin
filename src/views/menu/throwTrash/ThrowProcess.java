@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Questa classe gestisce il processo di simulazione del lancio dei rifiuti.
  * Gli utenti possono effettuare un lancio manuale dei rifiuti o un lancio casuale.
@@ -81,7 +83,7 @@ public class ThrowProcess {
      * insieme a un UserID valido e quantità di rifiuti casuali. Vengono effettuate verifiche
      * sull'utente e sulle notifiche.
      */
-    public void startRandomThrow() {
+    public void startRandomThrow(){
         System.out.println("------- Random Throw Trash Menu -------");
 
         TrashNotification trashNotification = new TrashNotification();
@@ -94,22 +96,28 @@ public class ThrowProcess {
             System.out.println("Il UserID fornito è valido.");
         }
 
+        System.out.println("Quante volte vuoi buttare la spazzatura?");
+        int n = scanner.nextInt();
+
+
         Random random = new Random();
-        int randomIndex = random.nextInt(dataStorage.getLocalBins().size());
-        String binID = dataStorage.getLocalBins().get(randomIndex).getId();
-        int sortedTrash = random.nextInt(10) + 1;
-        int unsortedTrash = random.nextInt(10) + 1;
+        for(int i=0; i<n; i++){
+            int randomIndex = random.nextInt(dataStorage.getLocalBins().size());
+            String binID = dataStorage.getLocalBins().get(randomIndex).getId();
+            int sortedTrash = random.nextInt(20) + 1;
+            int unsortedTrash = random.nextInt(20) + 1;
 
-        trashNotification.setBinId(binID);
-        trashNotification.setUserId(userID);
-        trashNotification.setSortedWaste(sortedTrash);
-        trashNotification.setUnsortedWaste(unsortedTrash);
-        trashNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
+            trashNotification.setBinId(binID);
+            trashNotification.setUserId(userID);
+            trashNotification.setSortedWaste(sortedTrash);
+            trashNotification.setUnsortedWaste(unsortedTrash);
+            trashNotification.setTimestamp(String.valueOf(LocalDateTime.now()));
 
-        int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
+            int result = dataStorage.uploadBin(trashNotification.getBinId(), trashNotification.getSortedWaste(), trashNotification.getUnsortedWaste());
 
-        if (verifyAlert(result, binID) == 0) {
-            publisherService.sendTrash(trashNotification);
+            if (verifyAlert(result, binID) == 0) {
+                publisherService.sendTrash(trashNotification);
+            }
         }
     }
 

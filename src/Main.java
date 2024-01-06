@@ -11,7 +11,7 @@ public class Main {
      *
      * @param args Gli argomenti passati dalla riga di comando (non utilizzati in questo caso).
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // Crea un'istanza di MyTerminalApp
         MyTerminalApp myTerminalApp = new MyTerminalApp();
 
