@@ -100,8 +100,10 @@ public class BinManagementMenu {
      */
     private void showAllBins() {
         System.out.println("------- Lista Bidoni ---------- ");
+        int index = 1;
         for (BinModel bin : dataStorage.getLocalBins()) {
-            System.out.println(bin.toString());
+            System.out.println(index + ") " + bin.toString());
+            index++;
         }
     }
 }
